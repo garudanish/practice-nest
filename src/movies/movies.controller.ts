@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { Movie } from './entities/movie.entitiy';
 import { MoviesService } from './movies.service';
@@ -31,15 +30,12 @@ export class MoviesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') movieId: string): boolean {
+  remove(@Param('id') movieId: string) {
     return this.movieService.deleteOne(movieId);
   }
 
   @Patch(':id')
   patch(@Param('id') movieId: string, @Body() updateData) {
-    return {
-      updatedMovie: movieId,
-      ...updateData,
-    };
+    return this.movieService.update(movieId, updateData);
   }
 }
